@@ -1,16 +1,84 @@
-body {
-  background-color: #999999;
-  color: #333333;
-  font: 100% Helvetica, sans-serif; }
+@media screen and (max-width: 1080px) {
+  body {
+    background-color: #999999;
+    color: #333333;
+    font: 150% Helvetica, sans-serif; }
 
+  #content {
+    margin: 5px 5px 20px 5px; }
+
+  select {
+    height: 40px;
+    padding: 0 10px; }
+
+  button {
+    height: 40px;
+    padding: 0 10px; } }
+@media screen and (max-width: 1080px) and (max-width: 540px) {
+  select {
+    height: 40px;
+    padding: 0; }
+
+  button {
+    height: 40px;
+    padding: 5px; } }
+@media screen and (max-width: 1080px) {
+  #title {
+    font-size: 25px;
+    margin-bottom: 5px; } }
+@media screen and (min-width: 1081px) {
+  body {
+    background-color: #999999;
+    color: #333333;
+    font: 100% Helvetica, sans-serif; }
+
+  #content {
+    margin: 10px 55px 30px 55px; }
+
+  #title {
+    font-size: 30px;
+    margin-bottom: 10px; } }
 #container {
   background-color: white;
   position: relative;
+  width: 100%;
   margin: 0 auto;
-  padding: 10px 55px 10px 55px; }
+  padding: 10px 0 20px; }
 
 .progressBars {
+  position: relative;
   display: block;
-  height: 40px;
   margin-bottom: 10px;
-  padding: 0; }
+  border: thin solid #cccccc;
+  padding: 0;
+  overflow: hidden;
+  height: 40px; }
+  @media screen and (max-width: 540px) {
+    .progressBars {
+      height: 50px; } }
+  @media screen and (max-width: 1080px) {
+    .progressBars {
+      height: 60px; } }
+
+.barTitle {
+  width: 100%;
+  text-align: center;
+  z-index: 3;
+  margin-top: 10px;
+  position: absolute; }
+  @media screen and (max-width: 540px) {
+    .barTitle {
+      margin-top: 15px; } }
+  @media screen and (max-width: 1080px) {
+    .barTitle {
+      margin-top: 20px; } }
+
+.barBackground {
+  background-color: lightblue;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  position: absolute; }
+
+.barBackground.red {
+  background-color: red; }

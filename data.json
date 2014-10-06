@@ -1,0 +1,14 @@
+[
+    {
+        "id": "progress1",
+        "progress": 125
+    },
+    {
+        "id": "progress2",
+        "progress": 45
+    },
+    {
+        "id": "progress3",
+        "progress": 50
+    }
+]

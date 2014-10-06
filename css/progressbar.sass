@@ -2,20 +2,81 @@ $default-font:    Helvetica, sans-serif
 $default-font-color: #333
 $default-background: #999
 
-body
-  background-color: $default-background
-  color: $default-font-color
-  font: 100% $default-font
+@media screen and (max-width: 1080px)
+  body
+    background-color: $default-background
+    color: $default-font-color
+    font: 150% $default-font
+  #content
+    margin: 5px 5px 20px 5px
+
+  select
+    height: 40px
+    padding: 0 10px
+  button
+    height: 40px
+    padding: 0 10px
+
+  @media screen and (max-width: 540px)
+    select
+      height: 40px
+      padding: 0
+    button
+      height: 40px
+      padding: 5px
+
+  #title
+    font-size: 25px
+    margin-bottom: 5px
+
+@media screen and (min-width: 1081px)
+  body
+    background-color: $default-background
+    color: $default-font-color
+    font: 100% $default-font
+  #content
+    margin: 10px 55px 30px 55px
+  #title
+    font-size: 30px
+    margin-bottom: 10px
 
 #container
   background-color: white
   position: relative
-  //width: 100%
+  width: 100%
   margin: 0 auto
-  padding: 10px 55px 10px 55px
+  padding: 10px 0 20px
 
 .progressBars
+  position: relative
   display: block
-  height: 40px
   margin-bottom: 10px
+  border: thin solid #CCC
   padding: 0
+  overflow: hidden
+  height: 40px
+  @media screen and (max-width: 540px)
+    height: 50px
+  @media screen and (max-width: 1080px)
+    height: 60px
+
+.barTitle
+  width: 100%
+  text-align: center
+  z-index: 3
+  margin-top: 10px
+  position: absolute
+  @media screen and (max-width: 540px)
+    margin-top: 15px
+  @media screen and (max-width: 1080px)
+    margin-top: 20px
+
+.barBackground
+  background-color: #add8e6
+  z-index: 2
+  height: 100%
+  width: 100%
+  position: absolute
+
+.barBackground.red
+  background-color: red

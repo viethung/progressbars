@@ -74,6 +74,16 @@ module.exports = function(grunt) {
 //                    spawn: false
 //                }
 //            }
+        },
+        qunit: {
+            all: {
+                options: {
+                    urls: [
+                        //'http://localhost/web/progressbars/',
+                        'http://localhost/web/progressbars/test/bar.html'
+                    ]
+                }
+            }
         }
     });
 
@@ -82,8 +92,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
-
 
     // Default task(s).
     //grunt.registerTask('default', ['concat', 'uglify']);
