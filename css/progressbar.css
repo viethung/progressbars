@@ -1,0 +1,16 @@
+body {
+  background-color: #999999;
+  color: #333333;
+  font: 100% Helvetica, sans-serif; }
+
+#container {
+  background-color: white;
+  position: relative;
+  margin: 0 auto;
+  padding: 10px 55px 10px 55px; }
+
+.progressBars {
+  display: block;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 0; }
