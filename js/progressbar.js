@@ -36,28 +36,12 @@
 
 //$(function () {
 var ProgressBarModel = Backbone.Model.extend({
-    //url: "progress",
     defaults: function() {
         return {
             id: "",
-                progress: 0
+            progress: 0
         };
     }
-//    defaults: function () {
-//        "use strict";
-//        return {
-//            progress: 50,
-//            elementId: ""
-//        };
-//    },
-//    change: function (value) {
-//        "use strict";
-//        var progress = this.get("progress");
-//        progress = progress + value;
-//        this.save({
-//            progress: Math.max(0, this.progress)
-//        });
-//    }
 }), ProgressBarList = Backbone.Collection.extend({
     model:  ProgressBarModel,
     url:    "data.json"
@@ -82,113 +66,52 @@ var ProgressBarModel = Backbone.Model.extend({
         return this;
     }
 }), MainView = Backbone.View.extend({
-        el: "body",
-        collection: new ProgressBarList(),
-        initialize: function() {
-            this.collection.fetch({
-                success: function () {
-                    app.render();
+    el: "body",
+    collection: new ProgressBarList(),
+    initialize: function() {
+        this.collection.fetch({
+            success: function () {
+                app.render();
+            }
+        });
+        return this;
+    },
+    render: function () {
+        $("#progressBarsHolder").html("");  //Prepare the bars
+        $("#selectBar").html("");           //Prepare select
+        this.collection.each(function(model) {
+            //Prepare the bars
+            var newBarView = new ProgressBarView({model: model});
+            $("#progressBarsHolder").append( newBarView.render().el );
+
+            //Prepare select
+            var newSelectView = new ProgressBarSelectView({model: model});
+            $("#selectBar").append(newSelectView.render().el);
+        });
+        return this;
+    },
+    showProgress: function (progressBarSelected, changeValue) {
+        this.collection.some(function(model) {
+            if (model.get("id") === progressBarSelected) {
+                var currProgress = model.get("progress");
+                var newProgress = currProgress + changeValue;
+                newProgress = Math.max(newProgress, 0); //Make sure it wont be lower than 0%
+                model.set({"progress":newProgress});
+                var cssLeft = Math.min(newProgress - 100, 0);
+                $("#"+progressBarSelected+" > .barBackground").animate({
+                    left: cssLeft + "%"
+                }, Math.abs(changeValue)*10, "linear");
+                if(newProgress > 100) {
+                    $("#"+progressBarSelected+" > .barBackground").addClass("red");
+                } else {
+                    $("#"+progressBarSelected+" > .barBackground").removeClass("red");
                 }
-            });
-            return this;
-        },
-        render: function () {
-            $("#progressBarsHolder").html("");  //Prepare the bars
-            $("#selectBar").html("");           //Prepare select
-            this.collection.each(function(model) {
-                //Prepare the bars
-                var newBarView = new ProgressBarView({model: model});
-                $("#progressBarsHolder").append( newBarView.render().el );
-
-                //Prepare select
-                var newSelectView = new ProgressBarSelectView({model: model});
-                $("#selectBar").append(newSelectView.render().el);
-            });
-            return this;
-        },
-        showProgress: function (progressBarSelected, changeValue) {
-            this.collection.some(function(model) {
-                if (model.get("id") === progressBarSelected) {
-                    var currProgress = model.get("progress");
-                    var newProgress = currProgress + changeValue;
-                    newProgress = Math.max(newProgress, 0); //Make sure it wont be lower than 0%
-                    model.set({"progress":newProgress});
-                    var cssLeft = Math.min(newProgress - 100, 0);
-                    $("#"+progressBarSelected+" > .barBackground").css({left: cssLeft + "%"});
-                    if(newProgress > 100) {
-                        $("#"+progressBarSelected+" > .barBackground").addClass("red");
-                    } else {
-                        $("#"+progressBarSelected+" > .barBackground").removeClass("red");
-                    }
-                    $("#"+progressBarSelected+" > .barTitle").html(newProgress+"%");
-                    return true;
-                }
-            });
-        }
-
-//    drawBar: function (elementId) {
-//        "use strict";
-//        var pbs = this.pbs[elementId],
-//            progress = pbs.model.get("progress"),
-//            width = progress * pbs.r.width / 100,
-//            color = progress > 100 ? "red" : "lightblue";
-//        pbs.bar = pbs.r.rect(0, 1, width, 40).attr({fill: color, "stroke-width": 0});
-//        pbs.txt = pbs.r.text("50%", "60%", progress + "%").attr({"font-size": "12px"});
-//    },
-//    showProgress: function (elementId, changeValue) {
-//        "use strict";
-//        var width, color, animateTime, widthNewProgress,
-//            selectProgressBar = this.pbs[elementId],
-//            currProgress = selectProgressBar.model.get("progress"),
-//            newProgress = currProgress + changeValue;
-//        newProgress = Math.max(newProgress, 0);
-//        if (newProgress !== currProgress) {
-//            selectProgressBar.model.set({"progress": newProgress});
-//            color = newProgress > 100 ? "red" : "lightblue";
-//            widthNewProgress = Math.min(100, newProgress);   //Limit the bar to max 100% width
-//            width = widthNewProgress * selectProgressBar.r.width / 100;
-//
-//            animateTime = Math.abs(changeValue) * 10;
-//            selectProgressBar.bar.animate({width: width, fill: color}, animateTime, "linear");
-//            selectProgressBar.txt.attr({"text": newProgress + "%"});
-//        }
-//    },
-//    initialize: function () {
-//        "use strict";
-//        var i, elementId, model, newPBV, r;
-//        for (i = 1; i < 4; i++) {
-//            elementId = "progress" + i;
-//            if (this.pbs.hasOwnProperty(elementId)) {
-//                r = this.pbs[elementId].r;
-//                r.clear();
-//                r.remove();
-//                this.pbs[elementId].r = new Raphael(document.getElementById(elementId), $("#" + elementId).width(), 40);
-//                r = this.pbs[elementId].r;
-//                r.rect(0, 0, r.width, 40).attr({"stroke": "#CCC", "stroke-width": 1});
-//                this.drawBar(elementId);
-//            } else {
-//                model = new ProgressBarModel({
-//                    elementId: elementId
-//                });
-//                newPBV = new ProgressBarView({
-//                    model: model
-//                });
-//                $("#progressBarsHolder").append(newPBV.render().el);
-//                this.r = new Raphael(document.getElementById(elementId), $("#" + elementId).width(), 42);
-//                this.r.rect(0, 0, this.r.width, 40).attr({"stroke": "#CCC", "stroke-width": 1});
-//                //init progress bar
-//                this.pbs[elementId] = {
-//                    model: model,
-//                    bar: null,
-//                    txt: null,
-//                    r: this.r
-//                };
-//                this.drawBar(elementId);
-//            }
-//        }
-//    }
-
-    }), app = new MainView(), ControlView = Backbone.View.extend({    //Button view - defined click event
+                $("#"+progressBarSelected+" > .barTitle").html(newProgress+"%");
+                return true;
+            }
+        });
+    }
+}), app = new MainView(), ControlView = Backbone.View.extend({    //Button view - defined click event
     el: $("button"),
     events: {
         "click": "btnClickFunc"

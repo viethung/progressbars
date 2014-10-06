@@ -33,7 +33,7 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    'js/progressbar.min.js': 'source/js/progressbar.js'
+                    'release/js/progressbar.min.js': 'js/progressbar.js'
                 }
             }
         },
@@ -49,6 +49,33 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        cssmin: {
+            minified: {
+                files: [{
+                    expand: true,
+                    cwd: 'css/',
+                    src: ['*.css', '!*.min.css'],
+                    dest: 'release/css/',
+                    ext: '.min.css'
+                }]
+            }
+        },
+        htmlmin: {                                     // Task
+            release: {  //Release
+                options: {                                 // Target options
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: {
+                    'release/index.html': 'index.html'     // 'destination': 'source'
+                }
+            },
+            dev: {//Development
+                files: {
+                    'release/index.html': 'index.html'
+                }
+            }
+        },
         watch: {
             scripts: {
                 files: ['./source/js/*.js'],
@@ -62,26 +89,16 @@ module.exports = function(grunt) {
             css: {
                 files: ['source/sass/*.css', 'css/*.css'],
                 //tasks: ['copy:css', 'uglify:css'],
-                tasks: ['copy:css'],
+                tasks: ['copy:css', 'cssmin:minified'],
                 options: {
                     spawn: false
                 }
             }
-//            ,html: {
-//                files: ['./*.htm'],
-//                tasks: ['copy:html'],
-//                options: {
-//                    spawn: false
-//                }
-//            }
-        },
-        qunit: {
-            all: {
+            ,html: {
+                files: ['*.html'],
+                tasks: ['htmlmin:release'],
                 options: {
-                    urls: [
-                        //'http://localhost/web/progressbars/',
-                        'http://localhost/web/progressbars/test/bar.html'
-                    ]
+                    spawn: false
                 }
             }
         }
@@ -92,7 +109,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
+	//grunt.loadNpmTasks('qunitjs');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
