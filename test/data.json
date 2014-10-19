@@ -10,5 +10,10 @@
     {
         "id": "progress3",
         "progress": 50
+    },
+    {
+        "id": "progress4",
+        "progress": 15
     }
+
 ]

@@ -76,12 +76,66 @@ module.exports = function(grunt) {
                 }
             }
         },
+        jasmine: {
+            js: {
+                src: 'js/**/*.js',
+                options: {
+                    specs: 'test/**/*.spec.js',
+                    template: 'test/progressbar.spec.html',
+                    keepRunner: true,
+                    vendor: [
+                        'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+                        'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js',
+                        'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js',
+                        'lib/jquery.smartresize.js'
+                    ]
+                }
+            },
+            coverage: {
+                src: ['js/**/*.js'],
+                options: {
+                    specs: ['test/**/*.spec.js'],
+                    //keepRunner: true,
+                    vendor: [
+                        'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+                        'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js',
+                        'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js',
+                        'lib/jquery.smartresize.js'
+                    ],
+                    template: require('grunt-template-jasmine-istanbul'),
+                    templateOptions: {
+                        template: 'test/progressbar.spec.html',
+                        coverage: 'coverage/coverage.json',
+                        report: {
+                            type: 'html',
+                            options: {
+                                dir: 'coverage'
+                            }
+                        },
+                        thresholds: {
+                            lines: 75,
+                            statements: 75,
+                            branches: 75,
+                            functions: 90
+                        }
+                    }
+                }
+            }
+        },
         watch: {
+            jasminetest: {
+                files: ['test/**/*.spec.js'],
+                //tasks: ['jasmine:js'],
+                tasks: ['jasmine:coverage'],
+                options: {
+                    spawn: true
+                }
+            },
             scripts: {
-                files: ['./source/js/*.js'],
+                files: ['js/*.js'],
                 //tasks: ['concat', 'uglify', 'concat:with_jquery', 'concat:with_jquery_min', 'copy:timeline'],
                 //tasks: ['jshint:js', 'uglify', 'copy:js'],
-                tasks: ['uglify', 'copy:js'],
+                tasks: ['jasmine:js', 'uglify', 'copy:js'],
                 options: {
                     spawn: false
                 }
@@ -112,6 +166,7 @@ module.exports = function(grunt) {
 	//grunt.loadNpmTasks('qunitjs');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).

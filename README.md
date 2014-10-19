@@ -1,6 +1,11 @@
 1/ Run npm install to install gruntjs modules<br />
 2/ Run grunt inside progressbars folder for automate process<br /><br />
 
+Testing and coverage:<br /><br />
+· Execute grunt from progressbars folder for automate and testing<br />
+· To Manually run jasmine test and code coverage report, execute "grunt jasmine:coverage"<br />
+· Code coverage report can be accessed from http://<your host name>/progressbars/coverage/<br /><br />
+
 Following feature has been developed:<br /><br />
 
 · Multiple bars<br />
@@ -16,8 +21,8 @@ Following feature has been developed:<br /><br />
 Bonus points for implementing "production quality" code, using practices such as:<br />
 · Setting it up as a project<br />
 · Setting up some automated tools -> using gruntjs<br />
-· Writing tests for your code (TDD would be nice) -> test file is inside test folder<br />
+· Writing tests for your code (TDD would be nice) -> jasmine test is automated under gruntjs, code coverage report can be accessed from <coverage> folder<br />
 · Version control (git)<br />
 · Linting, code quality, etc - using IDE builtin Linting<br />
 · JavaScript/CSS minification, packaging, etc   -> using gruntjs htmlmin and cssmin modules<br />
-· Using a CSS preprocessor like SASS/SCSS   -> Using IDE builtin SASS watch and compile to css on the fly<br /> 
+· Using a CSS preprocessor like SASS/SCSS   -> Using IDE builtin SASS watch and compile to css on the fly<br />
