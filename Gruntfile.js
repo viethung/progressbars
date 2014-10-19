@@ -82,7 +82,7 @@ module.exports = function(grunt) {
                 options: {
                     specs: 'test/**/*.spec.js',
                     template: 'test/progressbar.spec.html',
-                    keepRunner: true,
+                    //keepRunner: true,
                     vendor: [
                         'http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js',
                         'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js',
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
                 files: ['js/*.js'],
                 //tasks: ['concat', 'uglify', 'concat:with_jquery', 'concat:with_jquery_min', 'copy:timeline'],
                 //tasks: ['jshint:js', 'uglify', 'copy:js'],
-                tasks: ['jasmine:js', 'uglify', 'copy:js'],
+                tasks: ['jasmine:coverage', 'uglify', 'copy:js'],
                 options: {
                     spawn: false
                 }
